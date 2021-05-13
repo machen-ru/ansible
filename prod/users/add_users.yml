@@ -1,0 +1,47 @@
+---
+- name: create users, change root password, put ssh keys, create sudoers file for ansible user
+
+  hosts: all
+
+  gather_facts: False
+
+  vars_files:
+    - vars/secret.yml
+
+  tasks:
+
+  - name: add users
+    user:
+      name: "{{ item.username }}"
+      password: "{{ item.pwhash | password_hash('sha512') }}"
+      groups: wheel
+    loop: "{{ users }}"
+    no_log: true
+
+  - name: change root password
+    user:
+      name: "{{ rootuser }}"
+      password: "{{ rootpass | password_hash('sha512') }}"
+    no_log: true
+
+  - name: Allow 'wheel' group to have passwordless sudo
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^%wheel'
+      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
+
+  - name: add SSH public keys
+    authorized_key:
+      user: "{{ item.username }}"
+      key: "{{ lookup('file', 'files/'+ item.username + '/id_rsa.pub') }}"
+    loop: "{{ users }}"
+    no_log: true
+
+  - name: create sudoers file for ansible user
+    copy:
+      content: "ansible ALL=(ALL) NOPASSWD:ALL"
+      dest: /etc/sudoers.d/ansible
+      force: yes
+      mode: 0444

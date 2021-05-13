@@ -1,0 +1,25 @@
+---
+- name: install packages from variable
+
+  vars:
+    packages:
+      - mc
+      - wget
+      - epel-release
+      - vim
+      - bash-completion
+      - bash-completion-extras
+      - tree
+
+  hosts: all
+
+  gather_facts: False
+
+  tasks:
+
+  - name: install packages from variable
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ packages }}"
+

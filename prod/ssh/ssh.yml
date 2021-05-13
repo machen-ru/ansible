@@ -1,0 +1,26 @@
+---
+- name: disable ssh root and password login
+
+  hosts: prod
+
+  tasks:
+
+  - name: disable root SSH login
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "^PermitRootLogin"
+      line: "PermitRootLogin no"
+    notify: restart sshd
+
+  - name: disable password SSH login
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "^PasswordAuthentication"
+      line: "PasswordAuthentication no"
+    notify: restart sshd
+
+  handlers:
+  - name: restart sshd
+    service:
+      name: sshd
+      state: restarted

@@ -1,0 +1,43 @@
+---
+- name: install httpd, mod_ssl, create proxy configs
+
+  hosts: test
+
+  gather_facts: False
+
+  tasks:
+
+    - name: install httpd
+      package:
+        name: httpd
+        state: present
+
+    - name: install mod_ssl
+      package:
+        name: mod_ssl
+        state: present
+
+    - name: copy config files
+      copy:
+        src: "{{ item }}"
+        dest: /etc/httpd/conf.d/
+        mode: 0644
+      with_fileglob:
+        - files/conf/*
+
+
+    - name: copy certificates
+      copy:
+        src: "{{ item }}"
+        dest: /etc/httpd/ssl/
+        mode: 0644
+      with_fileglob:
+        - files/certs/*
+
+
+    - name: start and enable httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+

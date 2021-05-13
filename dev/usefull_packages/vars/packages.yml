@@ -1,0 +1,8 @@
+packages:
+  - mc
+  - wget
+  - epel-release
+  - vim
+  - bash-completion
+  - bash-completion-extras
+

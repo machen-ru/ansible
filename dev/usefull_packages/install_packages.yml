@@ -1,0 +1,19 @@
+---
+- name: install packages from variable (ver 1, var files)
+
+  vars_files:
+    vars/packages.yml
+
+
+  hosts: test
+
+  gather_facts: False
+
+  tasks:
+
+  - name: install packages from variable
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ packages }}"
+

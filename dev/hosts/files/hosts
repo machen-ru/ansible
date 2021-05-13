@@ -1,0 +1,9 @@
+127.0.0.1     localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1           localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.22.33 kvm.machen.local kvm
+192.168.22.34 management.machen.local management
+192.168.22.35 vpn.machen.local vpn
+192.168.22.40 web01.machen.local web01
+192.168.22.42 web02.machen.local web02 machen.ru www.machen.ru
+192.168.22.43 web03.machen.local web03
+192.168.22.101 ansible.machen.local ansible

@@ -1,0 +1,12 @@
+---
+- name: yum update
+
+  hosts: all
+
+  gather_facts: False
+
+  tasks:
+
+  - name: update all packages
+    yum: 
+      name=* state=latest

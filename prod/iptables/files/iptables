@@ -1,0 +1,19 @@
+# sample configuration for iptables service
+# you can edit this manually or use system-config-firewall
+# please do not ask us to add additional ports/services to this default configuration
+*filter
+-A INPUT -p tcp --dport 22 -m state --state NEW -j ACCEPT
+-A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
+-A INPUT -p tcp --dport 443 -m state --state NEW -j ACCEPT
+-A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+-A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-P INPUT DROP
+COMMIT
+
+
+
+
+

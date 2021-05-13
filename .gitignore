@@ -1,0 +1,4 @@
+dev/users/vars/secret.yml
+dev/users/vault-pass
+prod/users/vars/secret.yml
+prod/users/vault-pass
